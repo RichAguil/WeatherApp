@@ -1,5 +1,7 @@
-const twilio = require('twilio');
-const requestPromise = require('request-promise');
+//Vs code suggested you do this? instead
+import twilio from 'twilio';
+import requestPromise from 'request-promise';
+
 const accountSID = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 const authToken = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 const client = new twilio(accountSID, authToken);
@@ -13,6 +15,8 @@ const options = {
 function callback (error, response, body) {
 
     if (!error && response.statusCode == 200) {
+
+        //what happens when weather data is null?
         var weatherData = JSON.parse(body);
         overallWeather = dailyWeather(weatherData);
         //console.log(overallWeather);
@@ -27,11 +31,17 @@ function callback (error, response, body) {
 function dailyWeather(weatherData) {
 
     var temperatureString = 'Current temperature: ';
+
+    //potential null ref
     var temperatureData = weatherData.list[0].main.temp.toString() + ' degrees fahrenheit';
     var temperaturePackage = temperatureString + temperatureData;
 
     var atmosphericString = 'Current atmopsheric condition: ';
+
+    //potential null ref
     var atmosphericDescription = weatherData.list[0].weather[0].description;
+
+    //potential null ref
     atmosphericDescription = atmosphericDescription.replace(atmosphericDescription.charAt(0),atmosphericDescription.charAt(0).toUpperCase());
     var atmosphericPackage = atmosphericString + atmosphericDescription;
 
@@ -40,6 +50,7 @@ function dailyWeather(weatherData) {
 
 function sendMessage() {
 
+    //why not get the length of your phone numbers array
     for (var i = 0; i < 2; i++) {
 
         client.messages.create({
