@@ -40,7 +40,7 @@ function dailyWeather(weatherData) {
 
 function sendMessage() {
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < phoneNumbers.length; i++) {
 
         client.messages.create({
             body: overallWeather,
