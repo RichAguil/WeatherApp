@@ -52,4 +52,4 @@ function sendMessage() {
 
 }
 
-requestPromise(options, callback).then(sendMessage);
+requestPromise(options, callback).then(sendMessage());
